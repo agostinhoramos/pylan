@@ -1,0 +1,47 @@
+{
+    "name": "Debian GNU/Linux 11 (bullseye)",
+    "order": ["id", "address", "channel", "frequency", "mode", "quality", "signal", "ssid", "security", "encryption"],
+    "main_regex" : "Cell |Address|Channel|Frequency|Mode|Quality|ESSID|Auth|key|IE: IEEE|IE: WPA",
+    "regex": [
+        {
+            "re": {"l": "Cell ", "r": " - Address"},
+            "lb": "id"
+        },
+        {
+            "re": {"l": " - Address:", "r": null},
+            "lb": "address"
+        },
+        {
+            "re": {"l": "Channel:", "r": null},
+            "lb": "channel"
+        },
+        {
+            "re": {"l": "Frequency:", "r": " GHz"},
+            "lb": "frequency"
+        },
+        {
+            "re": {"l": "Mode:", "r": null},
+            "lb": "mode"
+        },
+        {
+            "re": {"l": "ESSID:\"", "r": "\""},
+            "lb": "ssid"
+        },
+        {
+            "re": {"l": "IE: IEEE 802.11i/", "r": " Version 1"},
+            "lb": "security"
+        },
+        {
+            "re": {"l": "Quality=", "r": "  Signal level="},
+            "lb": "quality"
+        },
+        {
+            "re": {"l": "Signal level=", "r": " dBm"},
+            "lb": "signal"
+        },
+        {
+            "re": {"l": "Encryption key:", "r": null},
+            "lb": "encryption"
+        }
+    ]
+}
