@@ -12,4 +12,7 @@ systemctl enable wpa_supplicant.service
 rm -rf /etc/resolv.conf
 cp /etc/{resolv.conf~,resolv.conf}
 
+sudo systemctl restart systemd-networkd.service
+sudo systemctl restart wpa_supplicant.service
+
 echo "1"
