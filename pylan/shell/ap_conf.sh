@@ -81,6 +81,3 @@ if [[ $output =~ $WLAN ]]; then
 else
     echo "0"
 fi
-
-# cd module/shell/
-# sudo ./set_access_point.sh

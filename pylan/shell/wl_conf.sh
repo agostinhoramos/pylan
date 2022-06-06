@@ -43,7 +43,3 @@ if [[ $output =~ $WLAN ]]; then
 else
     echo "0"
 fi
-
-# cd module/shell/
-# sudo chmod +x ./set_wlan_receiver.sh
-# sudo ./set_wlan_receiver.sh

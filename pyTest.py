@@ -2,8 +2,10 @@ from pylan.wlan import Wlan
 
 wlan = Wlan()
 
-r = wlan.getWiList('wlan1')
-print( r )
+# r = wlan.getIWList('wlan0')
+# print( r )
+
+wlan.restartConfig('wlan0')
 
 # wlan.setAccessPoint(
 #     wlanSSID="WiFi Brave",
@@ -11,6 +13,7 @@ print( r )
 #     secLevel="1",
 #     wlanNetwork="192.168.65.1",
 #     wlan="wlan0"
+
 # )
 
 # wlan.setWlanReceiver(

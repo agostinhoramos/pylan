@@ -18,13 +18,13 @@ class Wlan:
     def __init__(self, *args, **kwargs):
         self.ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.country = "PT"
-        self.fRefex = self.readJSON("debian_gnu_linux_en")
+        self.fRefex = self._readJSON("debian_gnu_linux_en")
 
-    def readJSON(self, name):
+    def _readJSON(self, name):
         f = open(self.ROOT_DIR + '/pylan/json/{}.json'.format(name))
         return json.load(f)
 
-    def getWiList(self, interface):
+    def getIWList(self, interface):
         proc1 = subprocess.Popen(['sudo', 'iwlist', interface, "scan"], stdout=subprocess.PIPE)
         proc2 = subprocess.Popen(['egrep', self.fRefex["main_regex"]], stdin=proc1.stdout,
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -106,5 +106,10 @@ class Wlan:
             return True
         return False
 
-    def restartConfig(self):
-        return True
+    def restartConfig(self, wlan):
+        FILE=self.ROOT_DIR + '/pylan/shell/rs_conf.sh'
+        out = check_output(['sudo', FILE, wlan])
+        out = _cmd_output(output=out)
+        if out == "1":
+            return True
+        return False
