@@ -5,15 +5,14 @@ wlan = Wlan()
 # r = wlan.getIWList('wlan0')
 # print( r )
 
-wlan.restartConfig('wlan0')
+# wlan.resetConfig('wlan0')
 
 # wlan.setAccessPoint(
-#     wlanSSID="WiFi Brave",
+#     wlanSSID="Pivotaa Brave",
 #     wlanPASS="ngueTela",
 #     secLevel="1",
-#     wlanNetwork="192.168.65.1",
+#     wlanNetwork="192.168.33.1",
 #     wlan="wlan0"
-
 # )
 
 # wlan.setWlanReceiver(

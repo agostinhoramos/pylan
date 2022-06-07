@@ -14,6 +14,15 @@ wlan_network="/etc/systemd/network/12-$WLAN.network"
 output=$(/sbin/iw dev)
 if [[ $output =~ $WLAN ]]; then
 
+    if [[ ! -f "/etc/network/interfaces" ]]; then
+        sudo systemctl mask networking.service dhcpcd.service
+        mv /etc/network/{interfaces,interfaces~} # Backup file
+        cp /etc/{resolv.conf,resolv.conf~}
+        sed -i '1i resolvconf=NO' /etc/resolvconf.conf
+        sudo systemctl enable systemd-networkd.service systemd-resolved.service
+        ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    fi
+
     {
         echo "country=$COUNTRY"
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
@@ -36,8 +45,8 @@ if [[ $output =~ $WLAN ]]; then
     sudo systemctl disable wpa_supplicant.service
     sudo systemctl enable wpa_supplicant@wlan1.service
 
-    systemctl restart systemd-networkd.service
-    systemctl restart wpa_supplicant@$WLAN.service
+    sudo systemctl restart systemd-networkd.service
+    sudo systemctl restart wpa_supplicant@$WLAN.service
 
     echo "1"
 else

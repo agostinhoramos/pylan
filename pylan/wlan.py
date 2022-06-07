@@ -106,7 +106,7 @@ class Wlan:
             return True
         return False
 
-    def restartConfig(self, wlan):
+    def resetConfig(self, wlan):
         FILE=self.ROOT_DIR + '/pylan/shell/rs_conf.sh'
         out = check_output(['sudo', FILE, wlan])
         out = _cmd_output(output=out)
