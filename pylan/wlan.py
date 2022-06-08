@@ -69,7 +69,7 @@ class Wlan:
                     jn.update({attr: int(value)})
                 elif attr == 'quality':
                     n = value.split("/")
-                    r = int(n[1]) - int(n[0])
+                    r = (int(n[0]) * 100) / int(n[1])
                     jn.update({attr: r})
                 elif attr == 'encryption':
                     boo = False
@@ -95,6 +95,44 @@ class Wlan:
         if out == 1:
             return True
         return False
+
+    def get_iwConf(self, interface, target):
+    
+        sQuery=""
+        sLeft=""
+        sRight=""
+
+        if target == 'essid':
+            sQuery="ESSID"
+            sLeft="ESSID:\""
+            sRight="\""
+        if target == 'mac':
+            sQuery="Access Point:"
+            sLeft="Access Point: "
+        if target == 'quality':
+            sQuery="Link Quality="
+            sLeft="Link Quality="
+            sRight="  Signal"
+
+        proc1 = subprocess.Popen(['sudo', 'iwconfig', interface], stdout=subprocess.PIPE)
+        proc2 = subprocess.Popen(['egrep', "{}".format(sQuery)], stdin=proc1.stdout,
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, err = proc2.communicate()
+        out = output.decode('ascii')
+        aux = ""
+
+        try: aux = out.split(sLeft)[1]
+        except: pass
+        try: aux = aux.split(sRight)[0]
+        except: pass
+
+        aux = aux.strip()
+
+        if target == 'quality':
+            n = aux.split("/")
+            aux = (int(n[0]) * 100) / int(n[1])
+
+        return aux
     
     def setWlanReceiver(self, wlanSSID, wlanPASS, keyMGMT, wlan, country=None):
         if country == None:
